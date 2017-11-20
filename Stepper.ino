@@ -25,4 +25,10 @@ void Close() {
   delay(2); 
 }
 
+void OpenWindow() {
+  for (int i = 0; i < 48 * 64 / 4; i++) Open();
+}
 
+void CloseWindow() {
+  for (int i = 0; i < 48 * 64 / 4; i++) Close();
+}
