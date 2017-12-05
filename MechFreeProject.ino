@@ -69,7 +69,7 @@ void autoMode(int lightLevel, float averageTemp) {
     case lowLight: lcd.print("Low      "); break;
     case medLight: lcd.print("Med     "); break;
     case highLight: lcd.print("High     "); break;
-    defaut: lcd.print("dunfuckedup"); break;
+    defaut: lcd.print("dunMESSEDup"); break;
   }
   Serial.println(lightLevel);
   if (lightLevels[currentLevel] > lightLevel) {
@@ -93,7 +93,7 @@ void resetShades() {
 
 void hardReset() {
   lcd.clear();
-  lcd.print("Seppuku");
+  lcd.print("RESETTING...");
   lcd.setCursor(0,1);
   lcd.print("BRB");
   CloseWindow();
