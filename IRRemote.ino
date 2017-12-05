@@ -8,15 +8,28 @@ void translateIR() // takes action based on IR code received
   switch(results.value)
 
   {
-  case 0xFFA25D: Serial.println("POWER"); break;
+  case 0xFFA25D: Serial.println("POWER"); hardReset(); break;
   case 0xFFE21D: Serial.println("FUNC/STOP"); break;
-  case 0xFF629D: Serial.println("VOL+"); adjustmentTemp++; break;
+  case 0xFF629D: Serial.println("VOL+"); if(!manualMode){
+    switch(currentLevel) {
+      case lowLight: currentLevel = 1;
+      case medLight: currentLevel = 2;
+      default: break;
+    }
+  }   break;
   case 0xFF22DD: Serial.println("FAST BACK");    break;
-  case 0xFF02FD: Serial.println("PAUSE");    break;
+  case 0xFF02FD: Serial.println("PAUSE"); if (manualMode) { manualMode = false; resetShades(); }
+                                          else manualMode = true; break;
   case 0xFFC23D: Serial.println("FAST FORWARD");   break;
-  case 0xFFE01F: Serial.println("DOWN");    break;
-  case 0xFFA857: Serial.println("VOL-"); adjustmentTemp--; break;
-  case 0xFF906F: Serial.println("UP");    break;
+  case 0xFFE01F: Serial.println("DOWN"); if(manualMode) for (int i = 0; i < 900; i++) Close();  break;
+  case 0xFFA857: Serial.println("VOL-"); if(!manualMode){
+    switch(currentLevel) {
+      case highLight: currentLevel = 1;
+      case medLight: currentLevel = 0;
+      default: break;
+    }
+  }   break;
+  case 0xFF906F: Serial.println("UP"); if(manualMode) for (int i = 0; i < 900; i++) Open();   break;
   case 0xFF9867: Serial.println("EQ");    break;
   case 0xFFB04F: Serial.println("ST/REPT");    break;
   case 0xFF6897: Serial.println("0");    break;
